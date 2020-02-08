@@ -17,7 +17,12 @@ public class RentACatImpl implements RentACat {
 
 	public boolean returnCat(int id) {
 		// TODO
-		return false;
+		Cat c = getCat(id);
+		if (_cats.contains(c) && c.getRented()){
+			c.returnCat();
+			return true;
+		}
+		else return false;
 	}
 
 	/**
@@ -32,7 +37,13 @@ public class RentACatImpl implements RentACat {
 
 	public boolean rentCat(int id) {
 		// TODO
-		return false;
+		Cat c = getCat(id);
+
+		if (_cats.contains(c) && !c.getRented()) {
+			c.rentCat();
+			return true;
+		}
+		else return false;
 	}
 
 	/**
@@ -47,7 +58,17 @@ public class RentACatImpl implements RentACat {
 
 	public String listCats() {
 		// TODO
-		return "WRITE CODE FOR THIS";
+		StringBuilder listofCats = new StringBuilder();
+		for (Cat cat : _cats) {
+			if (cat.getRented() == false)
+				listofCats
+						.append("ID ")
+						.append(cat.getId())
+						.append(". ")
+						.append(cat.getName())
+						.append("\n");
+		}
+		return listofCats.toString();
 	}
 
 	/**
@@ -61,7 +82,10 @@ public class RentACatImpl implements RentACat {
 
 	public boolean catExists(int id) {
 		// TODO
-		return false;
+		Cat c = getCat(id);
+
+		if (_cats.contains(c)) return true;
+		else return false;
 	}
 
 	/**
@@ -98,7 +122,7 @@ public class RentACatImpl implements RentACat {
 	 * Given an id, return a reference to the specified cat if a cat with that ID
 	 * exists. Return null if no cat of that ID exists in the list.
 	 * 
-	 * @param int id ID of cat to search for
+	 * @param  id ID of cat to search for
 	 * @return Cat searched for if exists, null otherwise
 	 */
 
